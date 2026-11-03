@@ -1,0 +1,10 @@
+node_modules/
+/dist/
+/build/
+/.mygo/
+mygo_windows_*.syso
+
+# Local agent skills and editor/Tooling state
+/.agents/
+.DS_Store
+*.log
