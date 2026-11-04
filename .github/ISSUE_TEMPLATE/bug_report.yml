@@ -1,0 +1,47 @@
+name: Bug report
+description: Something in the app does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please fill in what you can; a reproduction path
+        is what makes a fix possible.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what the app did instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open AgentsMD with ~/.agents/AGENTS.md present
+        2. Click a module in the sidebar
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: AgentsMD version
+      description: The version from the app menu, or the release tag you downloaded.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and chip
+      placeholder: macOS 15.2, Apple M2
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Anything else
+      description: Screenshots, the model gateway in use, or the app's terminal output.
+    validations:
+      required: false
