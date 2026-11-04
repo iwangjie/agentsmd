@@ -6,8 +6,7 @@ You keep writing in your own words, in your own language. AgentsMD organizes
 that text into the document agents actually read — translated, de-duplicated,
 compressed to the rules that matter — while your original stays untouched.
 
-<!-- Screenshot: replace with docs/screenshot.png once captured -->
-<!-- ![AgentsMD](docs/screenshot.png) -->
+![AgentsMD: the source file on the left, the organized document on the right](docs/screenshot.png)
 
 ## Why
 
