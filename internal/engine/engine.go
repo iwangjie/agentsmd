@@ -53,12 +53,13 @@ type Status struct {
 	Detail    string  `json:"detail"`
 }
 
-// New reads the gateway's address and key from the environment, with the
-// app's own defaults.
+// New reads the gateway's address and key from the environment. There is no
+// built-in key: a gateway without one accepts requests as they are, and one
+// that needs a key gets it from MAGPIE_API_KEY.
 func New(stateDir string) *Gateway {
 	g := &Gateway{
 		BaseURL: firstNonEmpty(os.Getenv("MAGPIE_BASE_URL"), DefaultBaseURL),
-		APIKey:  firstNonEmpty(os.Getenv("MAGPIE_API_KEY"), "magpie"),
+		APIKey:  os.Getenv("MAGPIE_API_KEY"),
 		Model:   os.Getenv("MAGPIE_MODEL"),
 		HTTP:    &http.Client{Timeout: 5 * time.Minute},
 	}
@@ -95,7 +96,7 @@ func (g *Gateway) Discover(ctx context.Context) ([]Model, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+g.APIKey)
+	g.authorize(req)
 
 	resp, err := g.HTTP.Do(req)
 	if err != nil {
@@ -198,7 +199,7 @@ func (g *Gateway) Chat(ctx context.Context, model, prompt string) (string, error
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("Authorization", "Bearer "+g.APIKey)
+	g.authorize(req)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := g.HTTP.Do(req)
@@ -259,4 +260,12 @@ func firstNonEmpty(values ...string) string {
 		}
 	}
 	return ""
+}
+
+// authorize sends the key only when there is one, so a gateway that does not
+// ask for a key is not handed an empty bearer token.
+func (g *Gateway) authorize(req *http.Request) {
+	if g.APIKey != "" {
+		req.Header.Set("Authorization", "Bearer "+g.APIKey)
+	}
 }

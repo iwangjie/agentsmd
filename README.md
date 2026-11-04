@@ -63,16 +63,16 @@ AgentsMD talks to a local OpenAI-compatible gateway and holds no cloud
 credentials of its own:
 
 ```
-base URL   http://127.0.0.1:3425/v1
-API key    the MAGPIE_API_KEY environment variable, else "magpie"
+base URL   http://127.0.0.1:3425/v1, or MAGPIE_BASE_URL
+API key    MAGPIE_API_KEY, sent as a bearer token when it is set
 ```
 
 Pick a model in Settings. The app uses exactly that model for every request and
 reports the reason when a request fails; it never switches models behind your
 back.
 
-Anything that speaks the OpenAI chat API works: set the base URL in Settings and
-point it at your own gateway, or set `MAGPIE_API_KEY` for authentication.
+Anything that speaks the OpenAI chat API works. Set `MAGPIE_BASE_URL` and
+`MAGPIE_API_KEY`, or change the base URL in Settings.
 
 ## Install
 
